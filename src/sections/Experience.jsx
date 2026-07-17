@@ -1,11 +1,11 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import SectionWrapper from '../components/SectionWrapper';
+import { useIsMobile } from '../hooks/useBreakpoint';
 
 const experience = {
   role: 'Python Developer',
   company: 'BlackRockIndia IT Solutions',
-  period: 'July 2024 — Present',
+  period: 'Jul 2024 — Present',
   items: [
     'Developed RESTful APIs using FastAPI and SQLAlchemy to optimize backend workflows and enable seamless EHR integrations with third-party healthcare platforms',
     'Designed, deployed, and maintained Windows Services for automating medical tasks and scheduling background processes with healthcare compliance',
@@ -19,157 +19,117 @@ const experience = {
 };
 
 export default function Experience() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const lineHeight = useTransform(scrollYProgress, [0.1, 0.85], ['0%', '100%']);
-  const bgY = useTransform(scrollYProgress, [0, 1], [-50, 50]);
+  const isMobile = useIsMobile();
 
   return (
     <SectionWrapper id="experience">
-      <div ref={ref} style={{ position: 'relative' }}>
-        {/* Glow */}
+      {/* Section label */}
+      <motion.p
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="label"
+        style={{ marginBottom: '3rem' }}
+      >
+        Experience
+      </motion.p>
+
+      {/* Headline */}
+      <motion.h2
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.05 }}
+        style={{
+          fontFamily: 'Outfit',
+          fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+          fontWeight: 800,
+          letterSpacing: '-0.025em',
+          lineHeight: 1.1,
+          color: 'var(--color-text)',
+          marginBottom: '4rem',
+        }}
+      >
+        Where I've{' '}
+        <span className="gradient-text">contributed</span>
+      </motion.h2>
+
+      {/* Experience entry */}
+      <div style={{ borderTop: '1px solid var(--color-border)' }}>
         <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6 }}
           style={{
-            y: bgY,
-            position: 'absolute', top: '50%', left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 500, height: 500, borderRadius: '50%', pointerEvents: 'none',
-            background: 'radial-gradient(circle, rgba(192,132,252,0.05), transparent 70%)',
+            display: 'grid',
+            /* Stack on mobile, two-col on desktop */
+            gridTemplateColumns: isMobile ? '1fr' : '180px 1fr',
+            gap: isMobile ? '1.25rem' : '2rem 4rem',
+            padding: isMobile ? '2rem 0' : '3rem 0',
+            borderBottom: '1px solid var(--color-border)',
           }}
-        />
-
-        {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-          <p style={{
-            fontFamily: 'JetBrains Mono', color: '#c084fc',
-            fontSize: '0.8rem', textTransform: 'uppercase',
-            letterSpacing: '0.3em', marginBottom: '1.25rem',
-          }}>
-            {'// '}Experience
-          </p>
-          <h2 style={{
-            fontFamily: 'Outfit', fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-            fontWeight: 700, color: '#fff',
-          }}>
-            Where I've{' '}
-            <span className="gradient-text-warm">contributed</span>
-          </h2>
-        </div>
-
-        {/* Timeline */}
-        <div style={{ position: 'relative', maxWidth: 720, margin: '0 auto' }}>
-          {/* Animated vertical line */}
-          <div style={{
-            position: 'absolute', left: 20, top: 0, bottom: 0,
-            width: 2, background: 'rgba(255,255,255,0.05)',
-          }}>
-            <motion.div
-              style={{
-                width: '100%', borderRadius: 2, transformOrigin: 'top',
-                height: lineHeight,
-                background: 'linear-gradient(to bottom, #c084fc, #818cf8, #22d3ee)',
-              }}
-            />
-          </div>
-
-          {/* Node with pulse */}
-          <div style={{ position: 'absolute', left: 11, top: 6 }}>
-            <motion.div
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4 }}
-              className="pulse-ring"
-              style={{
-                width: 20, height: 20, borderRadius: '50%',
-                border: '2.5px solid #c084fc', backgroundColor: '#030712',
-                boxShadow: '0 0 16px rgba(192,132,252,0.4)',
-              }}
-            />
-          </div>
-
-          {/* Experience card */}
-          <motion.div
-            initial={{ opacity: 0, x: -25 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.6 }}
-            className="glass holo-shimmer"
-            style={{
-              marginLeft: 55, borderRadius: '1rem',
-              padding: 'clamp(1.5rem, 3vw, 2.25rem)',
-              position: 'relative', overflow: 'hidden',
-            }}
-          >
-            {/* Status indicator */}
-            <div style={{
-              position: 'absolute', top: '1.25rem', right: '1.25rem',
-              display: 'flex', alignItems: 'center', gap: '0.4rem',
+        >
+          {/* Left — date / meta */}
+          <div style={{ display: 'flex', alignItems: isMobile ? 'center' : 'flex-start', gap: '1rem', flexWrap: 'wrap' }}>
+            <p className="label" style={{ marginBottom: 0, whiteSpace: 'nowrap' }}>
+              {experience.period}
+            </p>
+            <span style={{
+              display: 'inline-block',
+              fontSize: '0.68rem', fontWeight: 500,
+              padding: '0.22rem 0.6rem', borderRadius: '2rem',
+              border: '1px solid rgba(74, 222, 128, 0.25)',
+              color: '#4ade80',
+              letterSpacing: '0.08em',
+              whiteSpace: 'nowrap',
             }}>
-              <span style={{
-                width: 6, height: 6, borderRadius: '50%',
-                backgroundColor: '#34d399',
-                boxShadow: '0 0 8px rgba(52,211,153,0.5)',
-                animation: 'blink 2s ease-in-out infinite',
-              }} />
-              <span style={{
-                fontFamily: 'JetBrains Mono', fontSize: '0.65rem',
-                color: '#34d399', letterSpacing: '0.08em', opacity: 0.8,
-              }}>
-                ACTIVE
-              </span>
-            </div>
+              Active
+            </span>
+          </div>
 
-            {/* Header */}
-            <div style={{ marginBottom: '1.75rem' }}>
-              <h3 style={{
-                fontFamily: 'Outfit', fontSize: 'clamp(1.15rem, 2vw, 1.4rem)',
-                fontWeight: 700, color: '#fff', marginBottom: '0.4rem',
-              }}>
-                {experience.role}
-              </h3>
-              <p style={{
-                fontSize: '0.95rem', color: '#c084fc', fontWeight: 500,
-                marginBottom: '0.35rem',
-              }}>
-                {experience.company}
-              </p>
-              <p style={{
-                fontFamily: 'JetBrains Mono', fontSize: '0.75rem',
-                color: 'rgba(255,255,255,0.3)',
-              }}>
-                {experience.period}
-              </p>
-            </div>
+          {/* Right — role details */}
+          <div>
+            <h3 style={{
+              fontFamily: 'Outfit',
+              fontSize: isMobile ? '1.2rem' : '1.35rem',
+              fontWeight: 700,
+              color: 'var(--color-text)',
+              letterSpacing: '-0.02em',
+              marginBottom: '0.3rem',
+            }}>
+              {experience.role}
+            </h3>
+            <p style={{
+              fontSize: '0.88rem', fontWeight: 500,
+              color: 'var(--color-accent)',
+              marginBottom: '1.75rem',
+            }}>
+              {experience.company}
+            </p>
 
-            {/* Separator */}
-            <div style={{
-              width: '100%', height: 1, marginBottom: '1.5rem',
-              background: 'linear-gradient(90deg, rgba(192,132,252,0.15), rgba(129,140,248,0.08), transparent)',
-            }} />
-
-            {/* Items */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            {/* Bullet items */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.7rem' }}>
               {experience.items.map((item, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: -10 }}
+                  initial={{ opacity: 0, x: -8 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.35, delay: i * 0.05 }}
-                  style={{
-                    display: 'flex', alignItems: 'flex-start', gap: '0.65rem',
-                  }}
+                  transition={{ duration: 0.3, delay: i * 0.04 }}
+                  style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem' }}
                 >
                   <span style={{
-                    fontFamily: 'JetBrains Mono', fontSize: '0.7rem',
-                    color: '#c084fc', flexShrink: 0, marginTop: 3,
-                    opacity: 0.6,
+                    fontSize: '0.75rem',
+                    color: 'var(--color-accent)',
+                    marginTop: '0.35rem', flexShrink: 0, opacity: 0.6,
                   }}>
-                    ▹
+                    –
                   </span>
                   <span style={{
-                    fontSize: '0.9rem', color: 'rgba(255,255,255,0.5)',
+                    fontSize: isMobile ? '0.87rem' : '0.92rem',
+                    color: 'var(--color-muted)',
                     lineHeight: 1.75,
                   }}>
                     {item}
@@ -177,8 +137,8 @@ export default function Experience() {
                 </motion.div>
               ))}
             </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </div>
     </SectionWrapper>
   );

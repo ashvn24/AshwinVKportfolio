@@ -64,7 +64,7 @@ export default function AnimatedCursor() {
         transition={{ type: 'spring', stiffness: 300, damping: 28, mass: 0.5 }}
         style={{
           borderRadius: '50%',
-          border: '1px solid rgba(129,140,248,0.4)',
+          border: '1px solid rgba(232,213,176,0.35)',
           mixBlendMode: 'difference',
         }}
       />
@@ -82,7 +82,7 @@ export default function AnimatedCursor() {
           width: 6,
           height: 6,
           borderRadius: '50%',
-          backgroundColor: '#818cf8',
+          backgroundColor: '#e8d5b0',
         }}
       />
     </>

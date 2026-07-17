@@ -6,8 +6,8 @@ export default function SectionWrapper({ children, id, className = '' }) {
       id={id}
       className={`relative w-full ${className}`}
       style={{
-        paddingTop: '8rem',
-        paddingBottom: '8rem',
+        paddingTop: 'clamp(4rem, 10vw, 8rem)',
+        paddingBottom: 'clamp(4rem, 10vw, 8rem)',
       }}
     >
       <motion.div

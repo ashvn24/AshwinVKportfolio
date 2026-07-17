@@ -3,7 +3,6 @@ import Lenis from 'lenis';
 import Navbar from './components/Navbar';
 import ScrollProgress from './components/ScrollProgress';
 import AnimatedCursor from './components/AnimatedCursor';
-import DataStream from './components/DataStream';
 import Hero from './sections/Hero';
 import About from './sections/About';
 import TechStack from './sections/TechStack';
@@ -13,7 +12,7 @@ import Contact from './sections/Contact';
 
 function SectionDivider() {
   return (
-    <div style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
+    <div style={{ paddingTop: '0rem', paddingBottom: '0rem' }}>
       <div className="section-divider" />
     </div>
   );
@@ -46,9 +45,6 @@ export default function App() {
 
   return (
     <div className="noise" style={{ position: 'relative' }}>
-      {/* Global data stream background */}
-      <DataStream opacity={0.025} />
-
       <ScrollProgress />
       <AnimatedCursor />
       <Navbar />
